@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="reset.css">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+ 
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&display=swap" rel="stylesheet">
+   <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+            satoshi: ['Satoshi', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <title>Document</title>
+</head>
+<body>
+
+<div id="app" class="w-full min-h-dvh grid xl:grid-cols-2">
+  <div class="col-span-1 p-20 flex flex-col gap-20 font-inter max-2xl:p-10 max-md:gap-10 max-sm:p-4">
+    <div>
+      <img src="/photo/Logo 1.png" alt="logo">
+    </div>
+    <div class="flex flex-col gap-10">
+      <div>
+        <h1 class="font-satoshi font-normal text-[2.5rem] leading-tight tracking-normal mb-[0.625rem]">Sign in to Syncify Pro</h1>
+        <p class="font-normal text-base leading-tight tracking-normal text-[#3B3B3B]">Secure access to advanced tracking insights —
+           without opening Shopify Admin
+        </p>  
+      </div>
+      <button class="
+            flex 
+            justify-center 
+            gap-4 
+            border 
+            border-[#00000014] 
+            shadow-[0_1px_3px_rgba(0,0,0,0.1)]  
+            rounded-xl 
+            p-3 
+            transition-colors
+            hover:bg-[#00000014]
+            "
+            @click="ContinueWithShopifyAdmin"
+            >
+        <img src="/photo/Shopify logo.png" alt="Shopify-logo">
+        <span>Continue with Shopify Admin</span>
+      </button>
+      <div class="flex items-center gap-[0.625rem]">
+        <span class="flex-1 border-t border-[#00000014]"></span>
+        <span class="font-normal text-xs leading-tight tracking-normal text-[#969799]">OR</span>
+        <span class="flex-1 flex-1 border-t border-[#00000014]"></span>
+      </div>
+      <div>
+        <div class="flex flex-col gap-1 mb-4">
+          <label  class="font-semibold text-xs leading-tight tracking-normal text-[#3B3B3B]" for="email">E-mail address</label>
+           <input class="focus:outline-none 
+           border border-[#00000014] 
+           rounded-xl 
+           font-normal 
+           text-sm 
+           leading-tight 
+           tracking-normal
+           text-[#969799]
+           py-3
+           px-2
+           bg-[#F8F8FA]
+           " 
+           type="text" 
+           id="email" 
+           placeholder="username@email.com"
+           v-model="email"
+           >
+        </div>
+        <div class="text-[#969799] max-sm:flex max-sm:flex-col max-sm:gap-2">
+          <button :class="['py-3 px-5 rounded-xl font-medium text-sm mr-3 transition-colors'
+          ,
+          isValidEmail ? 'bg-black text-white' : 'bg-[#DEDFE0]'
+          ]"
+          :disabled="!isValidEmail"
+          @click="sendEmail"
+          >Send me login link</button>
+          <span class="font-normal text-xs leading-tight tracking-normal ">— We’ll send a secure one-time login link to your email.</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between gap-2 text-[#969799] max-md:flex-col max-md:gap-4">
+      <div>
+        <h2 class=" mb-3 font-semibold text-sm leading-tight tracking-normal text-[#3B3B3B]">How it works</h2>
+        <ol>
+          <li>1. Enter your email</li>
+          <li>2. Get a secure login link</li>
+          <li>3. Open Syncify Pro</li>
+          <li>4. The link expires automatically after use</li>
+        </ol>
+      </div>
+      <div>
+        <h2 class="mb-3 font-semibold text-sm leading-tight tracking-normal text-[#3B3B3B]">Secure & trusted access</h2>
+        <ul>
+          <li class="relative pl-4 before:content-['•'] before:absolute before:left-0">No passwords to remember</li>
+          <li class="relative pl-4 before:content-['•'] before:absolute before:left-0">One-time, time-limited login links</li>
+          <li class="relative pl-4 before:content-['•'] before:absolute before:left-0">Access tied to your Syncify account</li>
+          <li class="relative pl-4 before:content-['•'] before:absolute before:left-0">Shopify store connection remains required</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+ 
+<div class="col-span-1 relative overflow-hidden bg-gradient-to-br from-[#BCE67F] to-[#66BCF1] max-xl:hidden ">
+  <img class="absolute -bottom-4 left-40 rounded-3xl max-2xl:left-20 max-2xl:-bottom-auto max-2xl:bottom-20" src="/photo/image-login.png" alt="screen-img">
+</div>
+
+
+</div>
+
+<script>
+  const {createApp, ref, computed} = Vue
+
+  createApp({
+    setup(){
+      const email = ref('')
+      const isValidEmail = computed(()=>{
+        const sample = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return sample.test(email.value)
+      })
+      const sendEmail = () =>{
+        sessionStorage.setItem('UserEmail', email.value)
+        console.log('Email збережено в sessionStorage: ', email.value);
+        
+      }
+      const ContinueWithShopifyAdmin = () => {
+        window.location.href = 'https://apps.shopify.com/syncify-tracking-health'
+      }
+      return{email, isValidEmail, sendEmail, ContinueWithShopifyAdmin}
+    }
+  }).mount("#app")
+</script>
+</body>
+</html>
