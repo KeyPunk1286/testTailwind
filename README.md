@@ -1,10 +1,4 @@
-Цей проєкт — тестовий приклад використання **Vue 3** та **Tailwind CSS** через CDN.
+A simple Vue 3 + Tailwind CSS frontend that connects to the Email Validation Server and provides a login interface.
 
-Відкрити файл index.html у браузері:
-- подвійний клік по файлу, або
-- через локальний сервер (наприклад, VS Code Live Server).
+Open index.html in your browser.
 
-- # приклад запуску через VS Code
-code .
-# встановити розширення Live Server
-# натиснути "Go Live" і перейти на http://localhost:5500
